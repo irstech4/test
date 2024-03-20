@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 function Bar() {
   const scrollRef = useRef(null);
 
@@ -21,7 +21,7 @@ function Bar() {
   };
   return (
     <>
-      <div className="max-w-full mx-4 md:mx-10 lg:mx-20 bg-red-400 min-h-24 overflow-x-auto">
+      <div className="max-w-full mx-4 group md:mx-10 lg:mx-20 bg-red-400 min-h-24 overflow-x-auto">
         <div className="flex justify-center space-x-4 p-4 md:p-10">
           <div className="w-48 md:w-38 h-48 md:h-38">
             <img

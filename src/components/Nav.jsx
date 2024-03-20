@@ -2,7 +2,7 @@ import React from "react";
 function Nav() {
   return (
     <>
-      <nav class="flex justify-center">
+      <nav class="flex justify-start">
         <ul class="flex flex-wrap items-center font-medium text-sm">
           <li class="p-4 lg:px-8">
             <a class="text-slate-800 hover:text-slate-900" href="#">
@@ -14,7 +14,7 @@ function Nav() {
               History
             </a>
           </li>
-          <li class="p-4 group lg:px-8 relative flex items-center space-x-1">
+          <li class="p-4 group lg:px-8 group relative items-center space-x-1">
             <a class="text-slate-800 hover:text-slate-900" href="#0">
               Flyout Menu
             </a>
@@ -30,7 +30,8 @@ function Nav() {
               </svg>
             </button>
 
-            <ul class="origin-top-right absolute  top-full left-1/2 -translate-x-1/2 min-w-[980px] bg-white border border-slate-200 p-2 rounded-lg shadow-xl flex flex-row justify-between">
+            {/* <ul class="origin-top-right absolute invisible group-hover:visible top-full left-1/2 -translate-x-1/2 min-w-[980px] bg-white border border-slate-200 p-2 rounded-lg shadow-xl flex flex-row justify-between"> */}
+            <ul class="origin-top-right absolute top-full max-w-[980px] min-h-80 bg-white border border-slate-200 p-10 rounded-lg shadow-xl flex flex-row justify-between">
               <li>
                 <a
                   class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
@@ -49,7 +50,7 @@ function Nav() {
                   <span class="whitespace-nowrap">Priority Ratings</span>
                 </a>
               </li>
-              <li class="space-x-4">
+              <li class="space-x-4"> 
                 <div>
                   <a
                     class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
@@ -72,7 +73,102 @@ function Nav() {
                       class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
                       href="#"
                     >
-                     
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
+                      <span class="whitespace-nowrap">Item Mirror</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-slate-800 hover:bg-slate-50 flex items-center p-2"
+                      href="#"
+                    >
                       <span class="whitespace-nowrap">Item Mirror</span>
                     </a>
                   </li>
@@ -116,6 +212,9 @@ function Nav() {
               </li>
             </ul>
           </li>
+
+          <a href="#"></a>
+
           <li class="p-4 lg:px-8">
             <a class="text-slate-800 hover:text-slate-900" href="#">
               Contacts
