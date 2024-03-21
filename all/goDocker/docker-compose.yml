@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "goProject"
+    ports:
+      - '8081:8081'
+    volumes:
+      - .:/app
