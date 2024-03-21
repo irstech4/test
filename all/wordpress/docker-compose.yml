@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  wordpress-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wordpress-app  
+    ports:
+      - '80:80'
+    volumes:
+      - ./index.php:/var/www/html/index.php:ro
