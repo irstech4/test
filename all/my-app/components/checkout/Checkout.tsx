@@ -20,7 +20,7 @@ export default function Checkout() {
       name: "Another Product Name",
       size: "One Size",
       price: 49999,
-      quantity: 1,
+      quantity: 2,
       GST: 18,
     },
   ];
@@ -95,9 +95,9 @@ export default function Checkout() {
       <h1 className="mb-10 text-center text-2xl font-bold">Checkout</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
-          <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-sm sm:flex sm:justify-start">
+          <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-sm sm:justify-start">
             {/* create a Address form */}
-            <h2 className="text-lg font-medium text-gray-900 mb-4">Shipping Address</h2>
+            <h2 className="text-lg font-semibold mb-4">Shipping Address</h2>
             <form className="space-y-4">
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -109,37 +109,39 @@ export default function Checkout() {
                   id="fullName"
                   value={address.fullName}
                   onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="John Doe"
                 />
               </div>
-              <div>
-                <label htmlFor="addressLine1" className="block text-sm font-medium text-gray-700">
-                  Address Line 1
-                </label>
-                <input
-                  type="text"
-                  name="addressLine1"
-                  id="addressLine1"
-                  value={address.addressLine1}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="123 Main St"
-                />
-              </div>
-              <div>
-                <label htmlFor="addressLine2" className="block text-sm font-medium text-gray-700">
-                  Address Line 2
-                </label>
-                <input
-                  type="text"
-                  name="addressLine2"
-                  id="addressLine2"
-                  value={address.addressLine2}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Apartment, studio, or floor"
-                />
+              <div className="md:flex md:space-x-4">
+                <div className="md:w-1/2">
+                  <label htmlFor="addressLine1" className="block text-sm font-medium text-gray-700">
+                    Address Line 1
+                  </label>
+                  <input
+                    type="text"
+                    name="addressLine1"
+                    id="addressLine1"
+                    value={address.addressLine1}
+                    onChange={handleChange}
+                    className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="123 Main St"
+                  />
+                </div>
+                <div className="md:w-1/2">
+                  <label htmlFor="addressLine2" className="block text-sm font-medium text-gray-700">
+                    Address Line 2
+                  </label>
+                  <input
+                    type="text"
+                    name="addressLine2"
+                    id="addressLine2"
+                    value={address.addressLine2}
+                    onChange={handleChange}
+                    className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Apartment, studio, or floor"
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="city" className="block text-sm font-medium text-gray-700">
@@ -151,37 +153,39 @@ export default function Checkout() {
                   id="city"
                   value={address.city}
                   onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="City"
                 />
               </div>
-              <div>
-                <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-                  State/Province
-                </label>
-                <input
-                  type="text"
-                  name="state"
-                  id="state"
-                  value={address.state}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="State/Province"
-                />
-              </div>
-              <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
-                  ZIP/Postal Code
-                </label>
-                <input
-                  type="text"
-                  name="postalCode"
-                  id="postalCode"
-                  value={address.postalCode}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="ZIP/Postal Code"
-                />
+              <div className="md:flex md:space-x-4">
+                <div className="md:w-1/2">
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+                    State/Province
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    id="state"
+                    value={address.state}
+                    onChange={handleChange}
+                    className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="State/Province"
+                  />
+                </div>
+                <div className="md:w-1/2">
+                  <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
+                    ZIP/Postal Code
+                  </label>
+                  <input
+                    type="text"
+                    name="postalCode"
+                    id="postalCode"
+                    value={address.postalCode}
+                    onChange={handleChange}
+                    className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="ZIP/Postal Code"
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -193,7 +197,7 @@ export default function Checkout() {
                   id="country"
                   value={address.country}
                   onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full mb-2 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Country"
                 />
               </div>
