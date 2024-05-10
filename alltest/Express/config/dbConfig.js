@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const config = {
-  mongoURI: process.env.DATABASE_URI || "mongodb://express-mongo-1:27017/hello",
+  mongoURI: process.env.DATABASE_URI,
 };
 
 const connectToDB = async () => {
