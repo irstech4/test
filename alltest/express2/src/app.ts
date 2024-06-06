@@ -1,18 +1,35 @@
 import express, { Express, Request, Response, NextFunction } from 'express'
-import cors from 'cors';
-import helmet from 'helmet';
+import cors from 'cors'
+import helmet from 'helmet'
 import mongoose from 'mongoose'
 import routes from './routes/index'
 import connectToDatabase from './config/dbConfig'
 import config from './config'
-const app: Express = express()
 
-app.use(cors()); 
-app.use(helmet());
-app.use(express.json({ limit: "5mb" }));
-app.use(express.urlencoded({ extended: true }));
+declare module 'express-serve-static-core' {
+  interface Request {
+    subdomain?: string
+  }
+}
+const app: Express = express()
+app.use(cors())
+app.use(helmet())
+app.use(express.json({ limit: '5mb' }))
+app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/v1', routes)
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const host = req.headers.host
+  if (host) {
+    const subdomain = host.split('.')[0]
+    req.subdomain = subdomain
+  }
+  next()
+})
+app.get('/', (req, res) => {
+  res.send(`Subdomain is ${req.subdomain}`)
+})
 
 app.get('/health', async (req, res) => {
   try {
