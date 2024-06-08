@@ -3,9 +3,19 @@ import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
+
+interface ClientDetails {
+  clientId: string;
+  expiryDate: Date;
+  createDate: Date;
+  status: string;
+  userId: string;
+}
+
+
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, unique: true })
   userId: string;
 
   @Prop({ required: true })
@@ -21,20 +31,30 @@ export class User {
   password: string;
 
   @Prop({ type: String })
-  ContactNo: string;
+  contactNo: string;
 
   @Prop({ default: true })
   isActive: boolean;
-  
+
   @Prop({ default: false })
   CouponCode: boolean;
 
-  @Prop({ type: [{clientId:String,MobileNo:Number}] })
-  instanceIDs: [{clientId:String,MobileNo:Number}];
-
-  @Prop({ type: Types.ObjectId, ref: 'Payments' })
+  @Prop({ type: Types.ObjectId, ref: 'Payment' })
   payments: Types.ObjectId;
 
+  @Prop({ type: Array })
+  instanceIDs: [];
 
+  @Prop({ type: String, unique: true })
+  token: string;
+
+  @Prop([
+    {
+      SKU: { type: String },
+      productName: { type: String },
+      Qty: { type: Number },
+    },
+  ])
+  clientIds: ClientDetails[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);
