@@ -13,26 +13,13 @@ import { AltWhatsappModule } from './alt-whatsapp/alt-whatsapp.module';
 
 @Module({
   imports: [
-    // ScheduleModule.forRoot(),
+    
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => {
-        const envType = configService.get('ENV');
-        if (envType === 'Local') {
-          // const uri = configService.get('DB_URL');
-          // console.log('local');
-          return {
-            uri: 'mongodb://0.0.0.0:27017/DevRobot',
-          };
-        }
-        const uri = configService.get('DB_Prod_URL');
-        return {
-          uri,
-        };
-      },
-      inject: [ConfigService],
-    }),
+    MongooseModule.forRoot(
+      process.env.ENV === 'Local'
+        ? 'mongodb://0.0.0.0:27017/DevWhatsTest'
+        : process.env.DB_Prod_URL,
+    ),
     AuthModule,
     ProductsModule,
     PlansModule,

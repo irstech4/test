@@ -29,8 +29,8 @@ export class User {
   @Prop({ default: false })
   CouponCode: boolean;
 
-  @Prop({ type: [String] })
-  instanceIDs: [string];
+  @Prop({ type: [{clientId:String,MobileNo:Number}] })
+  instanceIDs: [{clientId:String,MobileNo:Number}];
 
   @Prop({ type: Types.ObjectId, ref: 'Payments' })
   payments: Types.ObjectId;
