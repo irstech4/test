@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Client, LocalAuth, RemoteAuth } from 'whatsapp-web.js';
+import { Client, MessageMedia, RemoteAuth } from 'whatsapp-web.js';
 import * as qrcode from 'qrcode-terminal';
 import { MongoStore } from 'wwebjs-mongo';
 import mongoose from 'mongoose';
@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 @Injectable()
 export class AltWhatsappService {
   private clients: { [key: string]: Client } = {};
-
 
   constructor() {
     this.initializeMongoConnection();
@@ -29,7 +28,7 @@ export class AltWhatsappService {
         await mongoose.connect(
           process.env.ENV === 'Local'
             ? 'mongodb://0.0.0.0:27017/DevWhatsTest'
-            : process.env.DB_Prod_URL
+            : process.env.DB_Prod_URL,
         );
       }
     }
@@ -41,6 +40,7 @@ export class AltWhatsappService {
     if (!clientId) {
       throw new BadRequestException('clientId is required');
     }
+    
     if (this.clients[clientId]) {
       throw new BadRequestException(`Client ${clientId} already exists`);
     }
@@ -51,22 +51,30 @@ export class AltWhatsappService {
 
     const store = new MongoStore({ mongoose: mongoose, session: clientId });
     const sessionExists = await store.sessionExists({ session: clientId });
+    // const session = await store.exists({ session: clientId });
+
+    console.log(sessionExists);
+    // console.log(session);
 
     if (!sessionExists) {
-      console.log(`Session for ${clientId} does not exist. Initializing new session...`);
+      console.log(
+        `Session for ${clientId} does not exist. Initializing new session...`,
+      );
 
       const client = new Client({
         puppeteer: {
           headless: true,
         },
         authStrategy: new RemoteAuth({
+          clientId: clientId,
           store: store,
           dataPath: `./sessions/${clientId}`,
           backupSyncIntervalMs: 60 * 1000,
         }),
         webVersionCache: {
           type: 'remote',
-          remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
+          remotePath:
+            'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
         },
       });
 
@@ -108,7 +116,9 @@ export class AltWhatsappService {
       this.clients[clientId] = client;
       await client.initialize();
     } else {
-      console.log(`Session for ${clientId} already exists. Reinitializing client...`);
+      console.log(
+        `Session for ${clientId} already exists. Reinitializing client...`,
+      );
       await this.initializeClient(store, clientId);
     }
   }
@@ -119,19 +129,23 @@ export class AltWhatsappService {
         headless: true,
       },
       authStrategy: new RemoteAuth({
+        clientId: clientId,
         store: store,
-        // dataPath: `./sessions/${clientId}`,
+        dataPath: `./sessions/${clientId}`,
         backupSyncIntervalMs: 60 * 1000,
       }),
       webVersionCache: {
         type: 'remote',
-        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
+        remotePath:
+          'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
       },
     });
 
     client.on('ready', async () => {
       console.log(`Client ${clientId} is ready!`);
       const version = await client.getWWebVersion();
+      const sessionSave = await store.save({ session: clientId });
+      console.log(sessionSave);
       console.log(`WhatsApp Web Version: ${version}`);
     });
 
@@ -182,4 +196,26 @@ export class AltWhatsappService {
       throw new BadRequestException(`Error sending message: ${error}`);
     }
   }
+
+  // create api for sending mediaifile to whatsapp number
+  async sendMedia(body, res) {
+    const { clientId, number, mediaUrl, caption } = body;
+    if (!clientId || !number || !mediaUrl)
+      throw new BadRequestException(
+        'clientId, number, and mediaUrl are required',
+      );
+
+    const client = this.clients[clientId];
+    if (!client) {
+      throw new BadRequestException(`Client ${clientId} does not exist`);
+    }
+    try {
+      const media = await MessageMedia.fromUrl(mediaUrl);
+      await client.sendMessage(number, media, { caption: caption });
+      return res.send({ message: 'media sent successfully' });
+    } catch (error) {
+      throw new BadRequestException(`Error sending media: ${error}`);
+    }
+  }
+  
 }

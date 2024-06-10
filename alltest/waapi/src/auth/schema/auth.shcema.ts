@@ -3,19 +3,9 @@ import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
-
-interface ClientDetails {
-  clientId: string;
-  expiryDate: Date;
-  createDate: Date;
-  status: string;
-  userId: string;
-}
-
-
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ type: String, required: true, unique: true })
+  @Prop({ type: String, required: true })
   userId: string;
 
   @Prop({ required: true })
@@ -27,34 +17,26 @@ export class User {
   })
   email: string;
 
+  @Prop({ type: String, unique: true })
+  token: string;
+
   @Prop({ required: true })
   password: string;
 
   @Prop({ type: String })
-  contactNo: string;
+  ContactNo: string;
 
-  @Prop({ default: true })
+  @Prop({type:Boolean, default: true })
   isActive: boolean;
-
+  
   @Prop({ default: false })
   CouponCode: boolean;
 
-  @Prop({ type: Types.ObjectId, ref: 'Payment' })
-  payments: Types.ObjectId;
+  @Prop({ type: [Types.ObjectId], ref: 'Instance' })
+  clientIds: Types.ObjectId[];
 
-  @Prop({ type: Array })
-  instanceIDs: [];
+  @Prop({ type: [Types.ObjectId], ref: 'Payments' })
+  payments: Types.ObjectId[];
 
-  @Prop({ type: String, unique: true })
-  token: string;
-
-  @Prop([
-    {
-      SKU: { type: String },
-      productName: { type: String },
-      Qty: { type: Number },
-    },
-  ])
-  clientIds: ClientDetails[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

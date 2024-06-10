@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { PassportStrategy } from '@nestjs/passport';
 import { Model } from 'mongoose';
 import { Strategy } from 'passport-jwt';
-
 import { Request } from 'express';
 import { User } from '../schema/auth.shcema';
 
@@ -17,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
   ) {
     super({
       jwtFromRequest: (req: Request) => {
-        return req.cookies.IRSADMIN;
+        return req.cookies.ADMIN;
       },
       secretOrKey: configService.get<string>('ADMIN_SECRET'),
     });
@@ -41,4 +40,3 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
     }
   }
 }
-
