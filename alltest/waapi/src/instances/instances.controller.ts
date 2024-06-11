@@ -1,7 +1,11 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
+  Patch,
+  Param,
+  Delete,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -12,10 +16,14 @@ import { AdminAuthGuard } from 'src/auth/gaurds/adminAuth.gaurd';
 export class InstancesController {
   constructor(private readonly instancesService: InstancesService) {}
 
-  
-  @Post("/createClientId")
   @UseGuards(AdminAuthGuard)
+  @Post("/createClientId")
   createClientId(@Body() body:any, @Res() res:Response){
     return this.instancesService.createClientId(body,res);
+  }
+
+  @Post("/generateToken")
+  generateToken(@Body() body:any, @Res() res:Response){
+    return this.instancesService.generateToken(body,res);
   }
 }

@@ -8,7 +8,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-const allSessionsObject = {};
+
 
 
 // Create a new client instance

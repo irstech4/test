@@ -5,14 +5,11 @@ export type UserTokenDocument = UserToken & Document;
 
 @Schema({ timestamps: true })
 export class UserToken {
-  @Prop({type: String, required: true, unique: true})
+  @Prop({ type: String, required: true })
   userId: string;
 
   @Prop({ type: String, required: true, unique: true })
   token: string;
-
-  @Prop({ type: [Types.ObjectId], ref: 'Instance' })
-  clientIds: Types.ObjectId[];
 }
 
-export const UserTokenSchema = SchemaFactory.createForClass(UserToken);                                                                                                                                               
+export const UserTokenSchema = SchemaFactory.createForClass(UserToken);

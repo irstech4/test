@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, isNotEmpty, IsNotEmpty, IsString } from 'class-validator';
 
 export class RegisterDto {
   @IsNotEmpty({ message: 'Name Should not be empty' })
@@ -9,7 +9,9 @@ export class RegisterDto {
   @IsEmail({}, { message: 'Invalid email format' })
   @IsNotEmpty({ message: 'Email should not be empty' })
   email: string;
+  
 
+  @IsString()
   @IsNotEmpty({ message: 'Password should not be empty' })
   password: string;
 }

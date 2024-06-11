@@ -8,7 +8,7 @@ export class Instance {
   @Prop({ type: String, required: true, unique: true })
   clientId: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'user' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   userId: Types.ObjectId;
 
   @Prop({ type: Date, default: Date.now() })

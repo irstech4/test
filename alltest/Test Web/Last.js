@@ -18,15 +18,21 @@ mongoose.connection.once('open', () => {
   console.log('MongoDB connection established');
 
   const initializeClient = (sessionName) => {
-    const store = new MongoStore({ mongoose: mongoose, session: sessionName });
+    const store = new MongoStore({ mongoose: mongoose});
+
+    // Initialize the client
+    console.log(`Initializing client for session ${sessionName}...`);
+    console.log(`Store: ${store}`);
+
+    
 
     const client = new Client({
       puppeteer: {
         headless: true,
       },
       authStrategy: new RemoteAuth({
+        clientId: sessionName,
         store: store,
-        dataPath: `./sessions/${sessionName}`, // Change directory to avoid permission issues
         backupSyncIntervalMs: 300000,
       }),
       webVersionCache: {
@@ -56,82 +62,9 @@ mongoose.connection.once('open', () => {
     client.on('message', async (message) => {
       try {
         if (message.from !== 'status@broadcast') {
-          const contact = await message.getContact();
-          const userId = contact.id._serialized;
+           message = message.body;
+          console.log(message);
 
-          if (!userStates.has(userId)) {
-            userStates.set(userId, STATES.GREETING);
-          }
-
-          const currentState = userStates.get(userId);
-
-          switch (currentState) {
-            case STATES.GREETING:
-              await message.reply(`Hi ${contact.pushname}, welcome to our service! How can I assist you today?`);
-              userStates.set(userId, STATES.MAIN_MENU);
-              break;
-
-            case STATES.MAIN_MENU:
-              const buttons = new Buttons(
-                'Please choose an option below:',
-                [
-                  { body: 'Get Info' },
-                  { body: 'Ask a Question' },
-                  { body: 'Contact Support' },
-                ],
-                'Main Menu',
-                'Select an option'
-              );
-              await client.sendMessage(message.from, buttons);
-              userStates.set(userId, STATES.OPTION_SELECTED);
-              break;
-
-            case STATES.OPTION_SELECTED:
-              if (message.body === 'Get Info') {
-                await message.reply('Here is the information you requested...');
-                userStates.set(userId, STATES.MAIN_MENU);
-              } else if (message.body === 'Ask a Question') {
-                await message.reply('Please type your question.');
-                userStates.set(userId, STATES.QUERY_HANDLING);
-              } else if (message.body === 'Contact Support') {
-                await message.reply('You can reach support at support@example.com');
-                userStates.set(userId, STATES.FOLLOW_UP);
-              } else {
-                await message.reply('Please select a valid option from the buttons.');
-                userStates.set(userId, STATES.MAIN_MENU);
-              }
-              break;
-
-            case STATES.QUERY_HANDLING:
-              await message.reply('Thank you for your question. We will get back to you shortly.');
-              userStates.set(userId, STATES.FOLLOW_UP);
-              break;
-
-            case STATES.FOLLOW_UP:
-              const list = new List(
-                'Do you need further assistance?',
-                'Choose an option',
-                [
-                  {
-                    title: 'Options',
-                    rows: [
-                      { id: 'yes', title: 'Yes', description: 'I need more help' },
-                      { id: 'no', title: 'No', description: 'I am good, thanks' },
-                    ],
-                  },
-                ],
-                'Follow Up',
-                'Please select'
-              );
-              await client.sendMessage(message.from, list);
-              userStates.set(userId, STATES.MAIN_MENU);
-              break;
-
-            default:
-              await message.reply('I am not sure how to help with that. Please start again.');
-              userStates.set(userId, STATES.GREETING);
-              break;
-          }
         }
       } catch (error) {
         console.log(error);
@@ -154,6 +87,6 @@ mongoose.connection.once('open', () => {
     }
   };
 
-  checkAndInitializeClient('client1');
+  checkAndInitializeClient('Hello123');
 
 });

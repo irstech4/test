@@ -17,18 +17,15 @@ export class User {
   })
   email: string;
 
-  @Prop({ type: String, unique: true })
-  token: string;
-
   @Prop({ required: true })
   password: string;
 
   @Prop({ type: String })
   ContactNo: string;
 
-  @Prop({type:Boolean, default: true })
+  @Prop({ type: Boolean, default: true })
   isActive: boolean;
-  
+
   @Prop({ default: false })
   CouponCode: boolean;
 
@@ -37,6 +34,5 @@ export class User {
 
   @Prop({ type: [Types.ObjectId], ref: 'Payments' })
   payments: Types.ObjectId[];
-
 }
 export const UserSchema = SchemaFactory.createForClass(User);
